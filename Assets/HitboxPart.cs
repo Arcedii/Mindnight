@@ -8,6 +8,18 @@ public class HitboxPart : MonoBehaviour
     [Tooltip("Ссылка на врага, которому принадлежит эта часть.")]
     public Enemy healthManager;
 
+    public ParticleSystem bloodEffect;
+
+    private AudioSource audioSource;
+
+    public AudioClip hitSound; // Присвоим через инспектор
+
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public void OnHit()
     {
         int damage = 0;
@@ -24,11 +36,24 @@ public class HitboxPart : MonoBehaviour
                 damage = 20;
                 break;
             case "Body":
-            default:
                 damage = 10;
                 break;
+
         }
 
         healthManager.TakeDamage(damage, bodyPartType);
+
+        // Эффект крови
+        bloodEffect?.Play();
+
+        // Воспроизвести эффект крови
+        if (bloodEffect != null)
+            bloodEffect.Play();
+
+        // Воспроизвести звук
+        if (audioSource != null && hitSound != null)
+            audioSource.PlayOneShot(hitSound);
     }
 }
+
+

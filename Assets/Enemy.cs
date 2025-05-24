@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     private Animator animator;
 
+    private bool isDead = false;
+
+
     private void Start()
     {
         startPos = transform.position;
@@ -24,10 +27,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (isDead) return; // ❌ не патрулирует после смерти
+
         if (waitTimer > 0)
         {
             waitTimer -= Time.deltaTime;
-            animator.SetBool("IsWalking", false); // ⛔ стоит — idle
+            animator.SetBool("IsWalking", false);
             return;
         }
 
@@ -36,9 +41,7 @@ public class Enemy : MonoBehaviour
 
         if (distance > 0.1f)
         {
-            animator.SetBool("IsWalking", true); // ✅ движется — walk
-            
-
+            animator.SetBool("IsWalking", true);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
             if (direction != Vector3.zero)
@@ -49,11 +52,12 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            animator.SetBool("IsWalking", false); // ⛔ дошёл — idle
+            animator.SetBool("IsWalking", false);
             waitTimer = waitTime;
             targetPos = GetRandomPoint();
         }
     }
+
 
     private Vector3 GetRandomPoint()
     {
@@ -74,7 +78,12 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        if (isDead) return;
+
+        isDead = true;
+        animator.SetTrigger("Die");
         Debug.Log("Враг погиб");
-        // Воспроизвести анимацию, отключить AI и т.д.
+        this.enabled = false; // отключает скрипт Enemy.cs полностью
     }
+
 }
