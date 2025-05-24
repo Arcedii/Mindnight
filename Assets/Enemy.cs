@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
     public float waitTime = 2f;
     public float rotationSpeed = 5f;
 
+    public int hp = 200;
+
     private Vector3 startPos;
     private Vector3 targetPos;
     private float waitTimer;
@@ -35,8 +37,7 @@ public class Enemy : MonoBehaviour
         if (distance > 0.1f)
         {
             animator.SetBool("IsWalking", true); // ✅ движется — walk
-            Debug.Log("IsWalking: " + animator.GetBool("IsWalking"));
-
+            
 
             transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
@@ -58,5 +59,22 @@ public class Enemy : MonoBehaviour
     {
         Vector2 offset = Random.insideUnitCircle * patrolRadius;
         return new Vector3(startPos.x + offset.x, transform.position.y, startPos.z + offset.y);
+    }
+
+    public void TakeDamage(int amount, string hitPart)
+    {
+        hp -= amount;
+        Debug.Log($"{hitPart} получил {amount} урона. Осталось HP: {hp}");
+
+        if (hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Враг погиб");
+        // Воспроизвести анимацию, отключить AI и т.д.
     }
 }

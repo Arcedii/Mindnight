@@ -190,39 +190,38 @@ namespace InfimaGames.LowPolyShooterPack
         }
         public override void Fire(float spreadMultiplier = 1.0f)
         {
-            //We need a muzzle in order to fire this weapon!
-            if (muzzleBehaviour == null)
-                return;
-            
-            //Make sure that we have a camera cached, otherwise we don't really have the ability to perform traces.
-            if (playerCamera == null)
+            if (muzzleBehaviour == null || playerCamera == null)
                 return;
 
-            //Get Muzzle Socket. This is the point we fire from.
             Transform muzzleSocket = muzzleBehaviour.GetSocket();
-            
-            //Play the firing animation.
-            const string stateName = "Fire";
-            animator.Play(stateName, 0, 0.0f);
-            //Reduce ammunition! We just shot, so we need to get rid of one!
+
+            // Анимация выстрела
+            animator.Play("Fire", 0, 0.0f);
+
+            // Отнимаем патроны
             ammunitionCurrent = Mathf.Clamp(ammunitionCurrent - 1, 0, magazineBehaviour.GetAmmunitionTotal());
 
-            //Play all muzzle effects.
+            // Эффекты дульного пламени
             muzzleBehaviour.Effect();
-            
-            //Determine the rotation that we want to shoot our projectile in.
-            Quaternion rotation = Quaternion.LookRotation(playerCamera.forward * 1000.0f - muzzleSocket.position);
-            
-            //If there's something blocking, then we can aim directly at that thing, which will result in more accurate shooting.
-            if (Physics.Raycast(new Ray(playerCamera.position, playerCamera.forward),
-                out RaycastHit hit, maximumDistance, mask))
-                rotation = Quaternion.LookRotation(hit.point - muzzleSocket.position);
-                
-            //Spawn projectile from the projectile spawn point.
+
+            // Вылет визуального снаряда
+            Quaternion rotation = Quaternion.LookRotation(playerCamera.forward);
             GameObject projectile = Instantiate(prefabProjectile, muzzleSocket.position, rotation);
-            //Add velocity to the projectile.
-            projectile.GetComponent<Rigidbody>().linearVelocity = projectile.transform.forward * projectileImpulse;   
+            projectile.GetComponent<Rigidbody>().linearVelocity = projectile.transform.forward * projectileImpulse;
+
+            // Raycast для урона
+            if (Physics.Raycast(playerCamera.position, playerCamera.forward, out RaycastHit hit, maximumDistance, mask))
+            {
+                HitboxPart hitPart = hit.collider.GetComponent<HitboxPart>();
+                if (hitPart != null)
+                {
+                    hitPart.OnHit();
+                }
+            }
+
+
         }
+
 
         public override void FillAmmunition(int amount)
         {
