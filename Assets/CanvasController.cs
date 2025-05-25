@@ -30,7 +30,15 @@ public class CanvasController : MonoBehaviour
 
     public void ReloadCurrentScene()
     {
+        InfimaGames.LowPolyShooterPack.Character.playerAlive = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
+
+        PlayerCanvas.SetActive(true);
+        DeathCanvas.SetActive(false);
+        playerIsDead = false;
     }
 }

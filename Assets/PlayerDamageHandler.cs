@@ -77,7 +77,9 @@ public class PlayerDamageHandler : MonoBehaviour
         PlayerCamera.gameObject.SetActive(false);
         DeathCamera1.gameObject.SetActive(true);
 
-        // Отключить только управление, UI оставить
-        playerInput.SwitchCurrentActionMap("UI");
+        InfimaGames.LowPolyShooterPack.Character.playerAlive = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
