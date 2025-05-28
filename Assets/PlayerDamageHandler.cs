@@ -19,7 +19,7 @@ public class PlayerDamageHandler : MonoBehaviour
 
     public GameObject PlayerCamera;
     public GameObject DeathCamera1;
-    public PlayerInput playerInput;
+    
 
 
     private void Update()

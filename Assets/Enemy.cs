@@ -122,10 +122,10 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         if (isDead) return;
-
         isDead = true;
         animator.SetTrigger("Die");
         Debug.Log("Враг погиб");
+        GameManager.instance.EnemyDied(); // вызов после Debug.Log("Враг погиб");
         this.enabled = false; // отключает скрипт Enemy.cs полностью
     }
 
