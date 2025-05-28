@@ -81,5 +81,9 @@ public class PlayerDamageHandler : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        int losses = PlayerPrefs.GetInt("LossCount", 0);
+        PlayerPrefs.SetInt("LossCount", losses + 1);
+
     }
 }

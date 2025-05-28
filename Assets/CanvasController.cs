@@ -16,6 +16,7 @@ public class CanvasController : MonoBehaviour
 
     void Start()
     {
+        InfimaGames.LowPolyShooterPack.Character.playerAlive = true;
         playerIsDead = false;
         playerHasWon = false;
 
@@ -83,6 +84,10 @@ public class CanvasController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        int wins = PlayerPrefs.GetInt("WinCount", 0);
+        PlayerPrefs.SetInt("WinCount", wins + 1);
+
     }
 
 }
