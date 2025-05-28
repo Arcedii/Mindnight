@@ -1,0 +1,3 @@
+Copyright (c) 2025 Craciun Dan
+
+This project is protected by copyright. You may view and modify the code only with the author's explicit permission. Distribution, resale, or publication of this code, assets, or any derivative work without permission is prohibited.

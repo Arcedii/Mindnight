@@ -1,3 +1,7 @@
+// Copyright (c) 2025 Craciun Dan. All rights reserved.
+// Unauthorized use or distribution is prohibited.
+
+
 using UnityEngine;
 
 public class ZombieAttackTrigger : MonoBehaviour
@@ -38,3 +42,5 @@ public class ZombieAttackTrigger : MonoBehaviour
         }
     }
 }
+
+"CreatedByCraciunDanXYZ"
