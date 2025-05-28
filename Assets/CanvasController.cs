@@ -46,6 +46,13 @@ public class CanvasController : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void QuitGame()
+    {
+        Debug.Log("Выход из игры...");
+        Application.Quit();
+    }
+
+
     public void ReloadCurrentScene()
     {
        

@@ -21,7 +21,8 @@ public class Enemy : MonoBehaviour
     public float attackRange = 2f;     // Дистанция атаки
 
     private GameObject player;
-    public static bool isAttacking = false;
+    public bool isAttacking = false; // УБРАТЬ static
+
 
 
 
