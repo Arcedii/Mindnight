@@ -42,5 +42,3 @@ public class ZombieAttackTrigger : MonoBehaviour
         }
     }
 }
-
-"CreatedByCraciunDanXYZ"
